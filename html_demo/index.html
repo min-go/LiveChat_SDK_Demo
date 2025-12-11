@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>我的网站</title>
+	</head>
+	<body>
+		<button onclick="hiiChat.chatOpen()">打开在线咨询</button>
+		<button onclick="hiiChat.chatClose()">关闭在线咨询</button>
+
+		<script 
+			defer 
+			src="https://chat-plugin.hiifans.com/widget/js/install.js?pluginId=xxxxx-xxxx-xxxx-xxxx-xxxxxx">
+		</script>
+
+		<script>
+
+			const initHiiChat = () => {
+				return new Promise((resolve) => {
+					if (window.hiiChat) {
+						resolve();
+					} else {
+						window.hiiChatReady = function () {
+							resolve();
+						};
+					}
+				});
+			};
+			
+			initHiiChat().then(()=>{
+				// 设置访客唯一标识
+				const userId = localStorage.getItem('userId') || `${Date.now()}`;
+				hiiChat.setVisitorId(userId);
+
+				// 隐藏icon
+				hiiChat.defineConfig({ hideIcon: true });
+
+				const handleChatOpen = () => {
+					// 监听聊天窗口打开事件
+				};
+				const handleChatClose = () => {
+					// 监听聊天窗口关闭事件
+				};
+				const handleReceiveMessage = (data) => {
+	        console.log('监听新消息', data);
+	      };
+	      const handleSendMessage = (data) => {
+	        console.log('监听发送消息', data);
+	      };
+
+				// 监听聊天窗口打开事件
+				hiiChat.on('chatOpen', handleChatOpen);
+				// 监听聊天窗口关闭事件
+				hiiChat.on('chatClose', handleChatClose);
+				// 监听接收新消息
+				hiiChat.on('receiveMessage', handleReceiveMessage);
+				// 监听发送新消息
+        hiiChat.on('sendMessage', handleSendMessage);
+
+
+				// 如需取消监听
+				hiiChat.off('chatOpen', handleChatOpen);
+				hiiChat.off('chatClose', handleChatClose);
+				hiiChat.off('receiveMessage', handleReceiveMessage);
+        hiiChat.off('sendMessage', handleSendMessage);
+			})
+		</script>
+	</body>
+</html>
+
