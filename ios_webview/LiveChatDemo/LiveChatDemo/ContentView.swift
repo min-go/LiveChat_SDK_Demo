@@ -138,7 +138,9 @@ func buildUrl() throws -> URL {
 
     let encrypted = try aesEncrypt(plainText: plainJson)
 
-    let encoded = encrypted.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+    let encoded = encrypted.addingPercentEncoding(
+        withAllowedCharacters: CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~")
+    )!
 
     let urlString = "https://chat-plugin.hiifans.com/native.html?pluginId=\(pluginId)&enc=\(encoded)"
     print("loadUrl: \(urlString)")
